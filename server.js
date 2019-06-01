@@ -9,30 +9,52 @@ const port = 3000;
 // server index.html
 app.use(express.static('public'));
 
+
+// routes
+
 // proxy middleware
-app.use('api/listings/header/:id', proxy({
-  target: 'http://localhost:3001'
-}));
+app.use('/:id', (req, res, next) => {
+  const id = req.params.id;
+  proxy({
+    target: `http://localhost:3001/api/listings/header/${id}`
+  })
+  next();
+});
 
-app.use('api/listings/tour/:id', proxy({
-  target: 'http://localhost:3002'
-}));
+app.use('/:id', (req, res, next) => {
+  const id = req.params.id;
+  proxy({
+    target: `http://localhost:3002/api/listings/tour/${id}`
+  })
+  next();
+});
 
-app.use('api/listings/amenities/:id', proxy({
-  target: 'http://localhost:3003'
-}));
+app.use('/:id', (req, res, next) => {
+  const id = req.params.id;
+  proxy({
+    target: `http://localhost:3003/api/listings/amenities/${id}`
+  })
+  next();
+});
 
-app.use('api/listings/reviews/:id', proxy({
-  target: 'http://localhost:3004'
-}));
+app.use('/:id', (req, res, next) => {
+  const id = req.params.id;
+  proxy({
+    target: `http://localhost:3004/api/listings/reviews/${id}`
+  })
+  next();
+});
 
-app.use('api/listings/hosts/:id', proxy({
-  target: 'http://localhost:3005'
-}));
+app.use('/:id', (req, res, next) => {
+  const id = req.params.id;
+  proxy({
+    target: `http://localhost:3005/api/listings/hosts/${id}`
+  })
+  next();
+});
 
-// route
-app.get('/listings/:id', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
+app.use('/:id', (req, res, next) => {
+  res.status(201).send('/public/index.html');
 });
 
 
